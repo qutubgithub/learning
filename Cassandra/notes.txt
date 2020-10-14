@@ -1,0 +1,137 @@
+Step 2 — Installing Cassandra
+
+$ echo "deb http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+$ echo "deb-src http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+To avoid package signature warnings during package updates, we need to add three public keys from the Apache Software Foundation
+
+
+$ gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D 
+gpg --export --armor F758CE318D77295D | sudo apt-key add -
+
+$ gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
+gpg --export --armor 2B5C1B00 | sudo apt-key add -
+
+$ gpg --keyserver pgp.mit.edu --recv-keys 0353B12C
+gpg --export --armor 0353B12C | sudo apt-key add -
+
+After adding the keys, get the updates and install Cassandra.
+
+
+$ sudo apt-get update
+$ sudo apt-get install cassandra
+
+
+
+
+Creating Table Schema
+You need to define a schema to suit your input CSV.
+
+/** Keyspace, table name*/
+
+public static final String KEYSPACE = "report";
+
+public static final String TABLE = "marklist";
+
+/** CREATE statement */
+
+public static final String SCHEMA = "CREATE TABLE report.marklist(roll No int PRIMARY KEY, " + "name text, " + "mark int, " + "subject text );";
+Note: Add keyspace name before table name. Otherwise CQ LSSTableWriter throws an exception.
+
+
+
+Creating INSERT Statement
+INSERT statement is like prepared statement. Basically, you fill in a place holder for each data coming from the CSV file.
+
+ public static final String INSERT_STMT = String.format"INSERT INTO %s.%s (" + "roll No, name, mark, subject" + ") 
+
+VALUES ("+ "?, ?, ?, ?" + ")", KEYS
+
+
+
+
+Defining an SSTable Writer
+Create a builder and set the output directory, where you want the newly created sstables to fall.
+
+CQLSSTableWriter.Builder builder = CQLSSTableWriter.builder();
+
+builder.inDirectory(outputDir).forTable(SCHEMA).using(INSERT_STMT)
+Its a common practice to set the outputDir as './data/keyspace-name/table-name'
+
+Note : ./data is the default output directory
+
+
+
+
+
+
+Defining an SSTable Writer...
+For each incoming lines from the CSV file call 'writer.addRow()' until you reach the last line of the input file.
+
+And the last step is to close the writer.
+
+See the following snippet:
+
+CQLSSTableWriter writer= builder.build();
+String line;
+int lineNumber = 1;
+CsvEntry entry = new CsvEntry();
+while ((line = reader.readLine()) != null) {
+if (entry.parse(line, lineNumber)) { writer.addRow(entry.rollNo, entry.name, entry.mark,entry.subject); } lineNumber++; } writer.close(); }
+
+Note: In entry.parse(line, lineNumber) ,logic to split the line with the specific delimiter and to set the data to the corresponding fields(roll No,name etc) should be defined.
+
+
+
+
+Syntax for COPY
+COPY FROM :
+
+COPY tablename [( column-list )]
+
+FROM 'filename'['file1_name', ...] | STDIN [WITH option = 'value' [AND ...]]
+COPY TO :
+
+COPY tablename [( column-list )]
+
+TO 'filename'['file1_name', ...] | STDOUT [WITH option = 'value' [AND ...]]
+Note: with COPY command you can give a list of one or more comma-separated file names.
+
+
+
+
+
+
+
+
+
+Create Sample Dataset
+Step 1 : Create a Keyspace
+
+CREATE KEYSPACE cycling WITH REPLICATION = { 'class' : 'NetworkTopologyStrategy', 'datacenter1' : 1  } ;
+Step 2 : Create table
+
+CREATE TABLE cycling.cyclist_name (id int PRIMARY KEY,name text) ;
+Step 3 : Insert data to table
+
+INSERT INTO cycling.cyclist_name (id, name) VALUES (32, 'Raichel'); . . .
+
+
+
+
+
+
+
+Exporting Data - Table to CSV
+You can copy data to CSV using COPY TO.
+
+COPY keyspace_name.tab_name (id,name) TO  '../file_name.csv' WITH HEADER = TRUE ;
+The file_name.csv file is created in the directory above the current working directory. If the file already exists, it will be overwritten.
+
+
+
+
+
+
+

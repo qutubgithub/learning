@@ -1,0 +1,20 @@
+def goodSegment(badNumbers,l,r):
+    maxLength=0
+    badNumbers=sorted(set(badNumbers))
+    for i in range(l,r+1):
+            for j in range(i,r+1):
+                found=0
+                for k in range(i,j+1):
+                    if k in badNumbers:
+                        found=1
+                        break
+                    else:
+                        continue
+                if found == 0:
+                    #print(i,j)
+                    if maxLength < j-i+1:
+                        maxLength=j-i+1
+    return maxLength
+
+
+badNumbers=[8,3,5,13,19,28,10,20,28,29,35,49,51,59,99,66,77,22,39,110,190,220,101,280,310,390,400,510,595,680]

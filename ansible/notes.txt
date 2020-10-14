@@ -1,0 +1,39 @@
+To check ssh service is running 
+$ service ssh status 
+
+To start service
+$ sudo service ssh start
+
+How to run basic ansible command 
+$ ansible localhost -m ping 
+
+hosts can be configured in this file 
+/etc/ansible/hosts
+
+Ansible config file location : /etc/ansible/ansible.cfg
+
+To Run playbook : 
+ansible-playbook -i ./hosts sample-playbook.yml --syntax-check # this is to check the .yml file syntax
+ansible-playbook -i ./hosts sample-playbook.yml --check # This is to check whether the ansible is going to be executed successfully or not , This command wont make chanegs
+ansible-playbook -i ./hosts sample-playbook.yml  # This is to execute the ansible playbook it will make changes
+
+Playbook sample: 
+---#This is first line
+- name: Playbook name 
+  hosts: all
+  
+  tasks: # This is called task which is to be executed in remote server
+    - name: task1 name to create a file # 1st task
+      copy: #This is called module
+        content: file content
+        dest: /XX/XX/XXXX/filename
+        owner: qutub
+	group: qutub
+	mode: 0777
+
+    - name: task1 name to create a file # 2nd task to install psmerge 
+      yum: #This is called module
+        name: psmerge
+        state: present
+
+      

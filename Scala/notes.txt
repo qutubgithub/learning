@@ -1,0 +1,686 @@
+sudo apt-get update;sudo apt-get install default-jre -y;sudo apt-get install default-jdk -y;sudo apt-get update ; sudo apt-get install scala -y
+
+Scala version 2.11.x will be installed. Check Scala version with: 
+scala -version`
+
+
+
+
+
+
+Hello, Scala!
+Check the path with pwd.
+
+Go to the root folder with cd.
+
+This program helps you print "Hello World" using Scala.
+
+In the root folder create a file named HelloScala using the following command: touch HelloScala.scala
+
+Open the file with vim editor using the following command: vim HelloScala.scala
+
+Change the file mode to insert by clicking i.
+
+Copy the following HelloScala program into the file:
+
+object HelloWorld{
+ def main(args :Array[String]){
+  println("Hello, Scala!")
+ }
+}
+
+After copying, press Esc followed by :wq to save the file.
+
+Compile the program by using:
+
+scalac HelloScala.scala
+
+Execute the program to print Hello, Scala! using:
+
+scala HelloScala.scala
+
+
+
+
+
+
+
+
+
+Taking Arguments From the Command Line
+Check the path with pwd.
+
+Go to the root folder with cd.
+
+This program helps you understand the method to take arguments from the command line.
+
+In the root folder create a file with name StringArg using the following command: touch StringArg.scala
+
+Open the file with vim editor with the following command: vim StringArg.scala
+
+Change the file mode to insert by clicking i.
+
+Copy the following StringArg program to the file: object StringArg{
+ def main(args : Array[String]){
+  println("Program "+args(0))
+ }
+}
+
+After copying, press Esc followed by :wq to save the file.
+
+Compile the program using:
+
+scalac StringArg.scala
+
+Execute the program to print Program Arguments using:
+
+scala StringArg.scala Arguments
+
+
+
+
+
+
+
+
+
+Function Definition Explained
+Scala syntax is flexible, and there are different ways you can write a function from a syntax point of view.
+
+Let us look at a simple function definition first.
+
+def addOne(arg: Int): Int = { arg + 1 }
+def is the keyword to define a method or function.
+addOne is a function that takes an integer as argument and returns another integer as result.
+Scala notation to express it: Int => Int (You can say Int gives Int !)
+
+
+
+
+
+
+
+
+object BasicFunc{
+def main(args : Array[String]){
+  val a : Int = args(0).toInt
+  val b : Int = args(1).toInt
+  var sum = add(a,b)
+  println(sum)
+ }
+ def add( a:Int, b:Int ) : Int = {
+//write your function here
+  return a + b
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+Create a Higher Order function
+Let us consider the following code snippet, myHigherOrderFunction function that takes two parameters.
+
+First parameter or argument is a function (i.e. a function itself as an argument). The function which is passed, when called, should be of type Int => Int. You could relate this to a function definition in the previous section.
+Second parameter is a value, a regular kind of parameter that we see.
+    def myHigherOrderFunction(argFn: Int => Int, argVal: Int): Int = {
+    println("Inside myHigherOrderFunction ")
+    println(s"\n Applying the arg function to argVal = $argVal")
+    argFn(argVal) // compute the argFn and return the result
+}
+Another takeaway: Look at the second print statement in the snippet and understand how to substitute a variable value in a string.
+
+Calling a Higher Order Function
+val myNumber = 10
+val result = myHigherOrderFunction(addOne, myNumber)
+println(result)
+The output of the above code would be 11. Do you know how that is done?
+
+
+
+
+object FuncLiterals{
+ def main(args : Array[String]){
+  val a : Int = args(0).toInt
+  val b : Int = args(1).toInt
+  var multiply = (a:Int, b:Int) => a * b //write your function literal here
+  println(multiply(a,b))
+ }
+}
+
+
+
+
+object HigherOrderFunction{
+ def main(args :Array[String]){
+  val input : Int = args(0).toInt
+  println(myHigherOrderFunction(addOne, input))
+ def addOne(arg: Int): Int = { arg * 9 }
+    def myHigherOrderFunction(argFn: Int => Int, argVal: Int): Int = {
+      argFn( argVal )
+    }//complete the code
+ }
+}
+
+
+
+
+
+
+
+
+Function Literals
+In Scala, functions can be expressed in function literal
+
+For example: (x: Int) => x + 1 is a function literal
+
+Those functions can be represented by objects, which are called function values.
+
+The above function can be read as, a function which takes an integer argument and returns an integer result.
+
+You can assign it to an object also as val f = (x: Int) => x + 1
+
+
+
+
+
+
+Using Function Literal
+Here is an example snippet to show to use function literals or function values:
+
+def myHigherOrderFunction(argFn: Int => Int, argVal: Int): Int = {
+   argFn(argVal) // compute the argFn and return the result
+}
+If the literal is not assigned to an object, it can be used as
+
+val result = myHigherOrderFunction((a: Int) => { a + 1 }, 12).
+
+If the same is assigned to an object f, it can be used as
+
+val result = myHigherOrderFunction(f, 12).
+
+Both will give the same result.
+
+Function literals are also known as anonymous functions.
+
+
+
+
+
+Let us get started with List, one of the most used collections in Scala.
+
+List, as the name goes, is similar to arrays. It is a collection of elements of the same type.
+
+Here is an example to create an integer list:
+
+val intList: List[Int] = List(1,2,3).
+
+As Scala is a language with lot of syntactic sugar and built-in type inference features, programmers can write the above expression as
+
+val intList = List(1,2,3) // this is valid too.
+
+
+
+
+
+
+Map
+Collections in Scala has a lot of built-in functions, and many of them are of type higher order functions. Let us see an example.
+
+// function to convert an integer to a string
+def  covertToString(arg: Int): String =  arg.toString
+Now, the following snippet would convert a list Integer values to a list of String, using map function.
+
+val newList: List[String] = intList.map(covertToString)
+// convertToString is a function which is passed onto map function in list.
+The function map in List type is a higher order function. It accepts a function that operates on one element of a List at a time. The argument function maps one element of list to another type say, U. i.e once you apply the map function on a list of type List[T], the result you get back is a List[U].
+
+Note: U can be same as T as well
+
+
+
+
+
+
+
+object ListFunctions{
+ def main(args :Array[String]){
+  val sampleList :List[Int] = List(1,2,3,4,5,6)
+  //write your code here
+   println(sampleList.head)
+   println(sampleList.tail)
+   println(sampleList.length)
+   println(sampleList.reverse)
+ }
+}
+
+
+
+
+
+
+
+
+
+object ListFunctions{
+ def main(args :Array[String]){
+  val sampleList :List[Int] = List(1,2,3,4,5,6)
+  //write your code here
+   println(sampleList.head)
+   println(sampleList.tail)
+   println(sampleList.length)
+   println(sampleList.reverse)
+ }
+}
+
+
+
+
+
+
+
+Scala collections orderly differentiate immutable and mutable collections.
+
+A mutable collection can be extended or updated in place. i.e. user can include, change or exclude elements of a collection as a side effect.
+
+By contrast, immutable collections, never change. Still, a user has operations that simulate updates, removals, or additions. However, these operations will return a new collection in each case and allow the old collection unchanged, as well.
+
+
+
+
+
+
+
+
+Collection Classes
+The entire lot of collection classes are available in the scala.collection package or one of the sub-packages of scala.collection - generic, immutable, and mutable.
+
+Most collection classes needed by client code exist in three variants, which are located in packages scala.collection, scala.collection.immutable, and scala.collection.mutable, respectively.
+
+Each variant features distinct characteristics on mutability.
+
+Note: By default, Scala always takes collection from the immutable hierarchy.
+
+For instance,
+
+If you just write Set without any prefix, or without having imported Set from somewhere, you will get an immutable set.
+If you write Iterable, you will get an immutable iterable collection, because these are the default bindings imported from the Scala package.
+To have the mutable default versions, you have to write explicitly collection.mutable.Set, or collection.mutable.Iterable
+
+
+
+
+
+
+
+
+
+Filtering
+There are plenty of built-in functions provided in Scala for all collections. We will look at a few of the commonly used ones.
+
+Here is an example of filter and _some more syntactic sugars in Scala. It is fun. Read the commented part carefully.
+
+object Main extends App {
+  val lst = List(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+  // example for filtering all elements greater than 5
+  val g5 = lst.filter(i => i > 5)
+  println(g5)
+}
+The above statement also shows usage of an anonymous function. ie i => i > 5 is actually of type Int => Boolean. type of i is not explicitly given as Scala understands that it is an Integer.
+
+Writing it as i: Int => i > 5 is also correct.
+
+Another simplification in terms of Syntactic sugar is to write the expression as val g5 = lst.filter(_ > 5). _ (underscore) will be replaced by the elements of the list by Scala compiler for you.
+
+
+
+
+
+
+object ListFilter{
+ def main(args :Array[String]){
+  val input = args(0).toInt
+  val numberList = List.range(0,input+1,1) //complete the code
+  val evenList = numberList.filter(i => i%2 == 0)//complete the code
+  println(evenList)
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+foreach
+foreach is an example of a method that can have side effects. foreach does not return anything. It can be used for writing the output to disk, database, printing, etc.
+
+  val intList = List(1,2,3,4,5)
+  intList.foreach(println) // foreach is of return type `Unit`
+Above snippet will print the result to stdout.
+
+Unit is the return type to mean there is nothing returned. Hence the methods of return type Unit can have side effects, i.e., they are not pure functions.
+
+Does it make sense with the functional programming concepts we learned?
+
+
+
+
+
+
+
+
+
+
+object mapFunction{
+ def main(args :Array[String]){
+  val input = args(0).toInt
+  val numberList = List.range(0,input,1)//complete the code
+  def incrementer( args1: List[Int] ): List[Int]  = {
+    //complete the code
+    return args1.map( i => i + 5 )
+  }
+  val incrementList = incrementer(numberList)//complete the code
+  println(incrementList)
+ }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+What is flatMap?
+We have already tried some examples with map. flatMap is very similar to map. However, there are some differences concerning the functions that are passed onto them. Both map and flatMap can be applied on many other data structures and where they are supported.
+
+Let us use List as an example here to understand about flatMap easily.
+
+To make it clear,
+
+map accepts a function that returns U for a given T. Here, T => U, hope you remember the previous example about Int => Int. T and U are generic types here.
+flatMap accepts a function that returns a List[U] for every T. ie the function passed onto it should be of type T => List[U]. The results are finally flattened to create a single List[U].
+It might be looking slightly complicated. Some examples would make it clear.
+
+
+
+
+
+
+
+
+Example for flatMap
+Following snippet gives an example for flatMap.
+
+object Main extends App {
+  val intList = List(1,2,3,4,5)
+  def returnTwo(arg: Int): List[Int] = List(arg, arg)
+  val newList = intList.flatMap(returnTwo)
+  println(newList)
+}
+output of the above snippet would be List(1,1,2,2,3,3,4,4,5,5)
+
+Hope that is clear now!
+
+
+
+
+
+
+
+
+
+
+
+
+Case Class
+case classes are similar to classes. You need to a put a keyword case in front of class.
+
+Is that all ? No.
+
+You can build objects of them without using new keyword.
+
+How do I create a case class.
+
+
+case class Fresco(specialisation: String, courseName: String)
+
+Now creating an object of type Fresco is easy enough as
+
+val obj = Fresco("modern data platform", "functional programming in Scala")
+
+There is no new keyword used, no setter methods used.
+
+case classes can have methods just like normal classes
+
+
+
+
+
+
+
+
+
+
+Pattern Matching
+Pattern matching is very similar to switch case structures that you would have seen other programming languages. However, Pattern Matching in Scala has lot more to do!
+
+Let us start with a simple example.
+
+Matching on Values
+
+val times = 1
+
+times match {
+  case 1 => "one"
+  case 2 => "two"
+  // _ matches everything else
+  case _ => "some other number" 
+}
+You can also use the concept called guards along with pattern matching. An example is here.
+
+// Note the if conditions given in case
+
+times match {
+  case i if i == 1 => "one"
+  case i if i == 2 => "two"
+  case _ => "some other number"
+}
+
+
+
+
+
+
+
+
+
+Pattern Matching on types
+We have seen one case of pattern matching, that was matching on values. Now let us look at an example of matching on types, sounds interesting?
+
+You can use a match to handle values of different types differently.
+
+// Any is the super type of all built-in types in Scala.
+
+In this example, argument o is matched against a type, whether it is Double or Int before doing an operation.
+
+def bigger(o: Any): Any = {
+  o match {
+    case i: Int if i < 0 => i - 1
+    case i: Int => i + 1
+    case d: Double if d < 0.0 => d - 0.1
+    case d: Double => d + 0.1
+    case text: String => text + "s"
+  }
+}
+
+
+
+
+
+
+
+
+Pattern matching on case classes
+case classes are designed to be used with pattern matching.
+
+abstract class Notification
+case class Email(
+  sender: String, 
+  title: String, 
+  body: String) extends Notification
+case class SMS(
+  caller: String, 
+  message: String) extends Notification
+case class VoiceRecording(
+  contactName: String, 
+  link: String) extends Notification
+Notification is an abstract super class which has three concrete Notification types implemented with case classes Email, SMS, and VoiceRecording.
+
+
+
+
+
+
+Pattern Matching on Case Classes Contd...
+Now we can do pattern matching on these case classes:
+
+def showNotification(notification: Notification): String = {
+  notification match {
+    case Email(email, title, _) =>
+      s"You got an email from $email with title: $title"
+    case SMS(number, message) =>
+      s"You got an SMS from $number! Message: $message"
+    case VoiceRecording(name, link) =>
+      s"you received a Voice Recording from $name! Click the link to hear it: $link"
+  }
+}
+val someSms = SMS("12345", "Are you there?")
+val someVoiceRecording = VoiceRecording("Tom", "voicerecording.org/id/123")
+// prints You got an SMS from 12345! Message: Are you there?
+println(showNotification(someSms))  
+// you received a Voice Recording from Tom! Click the link to hear it: voicerecording.org/id/123
+println(showNotification(someVoiceRecording))  
+
+
+
+
+
+
+
+
+
+
+
+object PatternMatching{
+ def main(args :Array[String]){
+  val input :Int = args(0).toInt
+  input match {
+    case i if i < 0 => print("Negative/Zero is input")
+    case i if i%2 == 0 => print("Even number is given")
+    case _ => print("Odd number is given")
+  }
+  //write your code here
+}
+}
+
+
+
+
+
+
+
+Traits
+Traits are applied to share fields and interfaces between classes. These are same as Java 8’s interfaces. Objects and classes can extend traits. However, traits cannot be instantiated and hence have no parameters.
+
+Defining a trait
+
+A minimal trait is simply the keyword trait and an identifier:
+
+ex: trait HairColor
+
+extends is the keyword to inherit from a trait.
+
+
+
+
+
+
+
+
+Traits Example
+Let us look at an example
+
+for trait.
+
+trait BaseSoundPlayer {
+  def play
+  def close
+  def pause
+  def stop
+  def resume
+}
+If a class implements one trait it will use the extends keyword:
+
+class Mp3SoundPlayer extends BaseSoundPlayer {
+  def play   {}
+  def close  {}
+  def pause  {}
+  def stop   {}
+  def resume {}
+}
+One trait can extend another trait:
+
+If a class extends a trait but does not implement the methods defined in that trait, it must be declared abstract:
+
+
+
+
+
+
+
+
+
+
+Implementing Multiple Traits
+If a class implements multiple traits, it will extends the first trait (or a class, or abstract class), and then use with for other traits:
+
+Here is an example
+
+abstract class Animal {
+  def speak
+}
+trait WaggingTail {
+  def startTail
+  def stopTail
+}
+trait FourLeggedAnimal {
+  def walk
+  def run
+}
+class Dog extends Animal with WaggingTail with FourLeggedAnimal {
+  // implementation code here ...
+}
+
+
+
+
+
+
+
+

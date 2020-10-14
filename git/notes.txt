@@ -1,0 +1,119 @@
+Initial Setup of git : 
+$ git config --global user.name "Qutub"
+$ git config --global user.email "707.qutub@gmail.com"
+
+To list all global configuration :
+$ git global --list
+
+To open git help : 
+$ git help config
+OR
+$ git config --help
+
+To start tracking of local code base or repositry 
+$ git init
+	Note : This command start tracking for the working directry and it creates .git directry to track the changes
+
+$ git status # It show all un commited changes or un tracked files/folder 
+
+To exclude tracking for some specific files
+$ touch .gitignore # put the files which need not to be tracked
+
+$ git add -A # To add all files from repositry to Staging area
+OR
+$ git add <<file name>> # To add specific file from repositry to Staging area
+
+You can check staging area components byt running git status
+
+$ git reset <<file_name>> # This command is not move back files form staging to local area 
+OR 
+$ git reset # It will move all file from staging to local area
+
+$ git commit -m "Message for the change" # To commit the changes 
+
+$ git log # To see all commit logs with their message
+
+$ git clone <url> <where to clone> # Used to clone a repository 
+eg. 
+$ git clone https://github.com/qutubgithub/learning.git .
+
+$ git remote -v # To view information about remote repository
+or
+$ git branch -a # To view remote and local repository both
+
+Pushing changes to remote repository
+First do some changes in code base
+$ git diff # IT will show the changes done in the code base
+Then check the status using git status
+$ git status
+Then add the changes in staging form working directory 
+$ git add -A 
+Then comit the changes
+$ git commit -m "Message for the changes" 
+Final step to push the changes
+$ git pull origin master
+$ git push origin master
+
+
+Creating a branch
+$ git branch <<branch name>>
+eg.
+$ git branch new_branch
+
+To move from branch to another branch
+$ git checkout new_branch $ checkout to the branch name
+
+
+Branch Operations
+===================
+You can do the following with branch:
+Creating new branch: git checkout -b <branch-name>
+Pushing branch from local to remote repo: git push origin <branch-name>
+Renaming branch:
+Renaming local branch: git branch -m old-name new-name
+Renaming remote branch: git push origin :old-name new-name
+Deleting branch:
+Deleting local branch: git branch -d <branch-name>
+Deleting remote branch: git push origin -d <branch-name>
+
+
+
+
+Building New Feature: Signin
+=============================
+For a new feature to be built:
+Create a new branch from the master branch: git checkout -b signin
+Add your new code in the new feature branch: git add -A
+Commit your changes once done: git commit -m "add signin page"
+Push your changes to the remote: git push origin signin
+As your sign-in feature is ready in a different branch, now you can merge it with the master branch.
+
+
+Make the changes in local branch and push to remote using the below 
+$ git add -A
+$ git commit -m "Changed devide func"
+Then pust to remote branch
+$ git push -u origin new_branch
+
+Merging branch with master
+$ git checkout master 
+$ git pull origin master 
+$ git branch --merged
+$ git merge new_branch
+$ git push origin master 
+
+Deleting branch locally 
+$ git branch -d new_branch 
+
+Deleting branch from remote
+$ git push origin --delete new_branch
+
+To see the branch deleted from remote 
+$ git branch -a
+
+
+To set the remote repository
+$ git remote add origin <<remote repo url>>
+
+To see the remote repository 
+$ git remote -v

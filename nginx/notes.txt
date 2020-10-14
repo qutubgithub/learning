@@ -1,0 +1,5 @@
+Installing Nginx
+$ sudo apt-get install nginx
+
+Enabling firewall 
+$ sudo ufw enable

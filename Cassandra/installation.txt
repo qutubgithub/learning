@@ -1,0 +1,36 @@
+Step 2 — Installing Cassandra
+
+$ echo "deb http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+$ echo "deb-src http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+
+To avoid package signature warnings during package updates, we need to add three public keys from the Apache Software Foundation
+
+
+$ gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D 
+gpg --export --armor F758CE318D77295D | sudo apt-key add -
+
+$ gpg --keyserver pgp.mit.edu --recv-keys 2B5C1B00
+gpg --export --armor 2B5C1B00 | sudo apt-key add -
+
+$ gpg --keyserver pgp.mit.edu --recv-keys 0353B12C
+gpg --export --armor 0353B12C | sudo apt-key add -
+
+After adding the keys, get the updates and install Cassandra.
+
+
+$ sudo apt-get update
+$ sudo apt-get install cassandra
+
+
+
+
+Step 3 — Starting and Connecting to cluster
+$ sudo service cassandra status
+If you were able to start Cassandra, verify the status of the cluster:
+
+$ sudo nodetool status
+Now connect to it using its interactive command line interface cqlsh.
+
+$ cqlsh
+There you go!!
